@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// 🤖 CHATBOT ARTIBOT CON AI BACKEND
+// 🤖 CHATBOT ARTIBOT via backend locale
 function sendMessage() {
   const input = document.getElementById('user-input');
   const log = document.getElementById('chat-log');
@@ -81,7 +81,7 @@ function sendMessage() {
   log.appendChild(botMsg);
   log.scrollTop = log.scrollHeight;
 
-  fetch('http://stanzadellacreativita.onrender.com/chat', {
+  fetch('/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ message: userText })
@@ -93,7 +93,7 @@ function sendMessage() {
     })
     .catch(err => {
       botMsg.innerHTML = `<strong>Artibot:</strong> Ops! Non riesco a rispondere al momento.`;
-      console.error('Errore nella comunicazione con il backend:', err);
+      console.error('Errore nella comunicazione con il server:', err);
     })
     .finally(() => {
       input.disabled = false;
