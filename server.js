@@ -39,6 +39,11 @@ app.post('/chat', async (req, res) => {
     return res.status(400).json({ reply: '❌ Messaggio non valido o vuoto.' });
   }
 
+  if (!API_KEY) {
+    console.error("❌ API_KEY mancante. Verifica le variabili d'ambiente.");
+    return res.status(500).json({ reply: '🔒 Chiave API non configurata.' });
+  }
+
   try {
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
@@ -69,12 +74,12 @@ app.post('/chat', async (req, res) => {
     res.json({ reply });
 
   } catch (error) {
-    console.error('🔥 Errore OpenRouter:', error);
+    console.error('🔥 Errore OpenRouter:', error.response?.data || error.message || error);
     res.status(500).json({ reply: '😓 Ops! Errore interno. Riprova tra poco.' });
   }
 });
 
 // Avvio server
-app.listen(3000, () => {
-  console.log("Server listening on port 3000");
+app.listen(PORT, () => {
+  console.log(`🚀 Server listening on port ${PORT}`);
 });
