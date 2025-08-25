@@ -1,2 +1,5 @@
-".env\nnode_modules/" 
-".env" 
+node_modules/
+.env
+__pycache__/
+*.pyc
+*.log

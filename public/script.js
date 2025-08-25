@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // 🖼️ CARICAMENTO GALLERIA DINAMICA
-  fetch('/static/data/portfolio.json')
+  fetch('static/data/portfolio.json')
     .then(response => {
       if (!response.ok) throw new Error('Errore nel caricamento dei dati');
       return response.json();
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!item.image || !item.title || !item.description || !item.category) return;
 
         const div = document.createElement('div');
-        div.className = 'card';
+        div.className = `card ${item.category}`;
         div.dataset.category = item.category;
         div.innerHTML = `
           <img src="${item.image}" alt="${item.title}">

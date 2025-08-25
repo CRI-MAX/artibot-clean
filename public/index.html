@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>La Stanza della Creatività di Manuela</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <link rel="icon" href="{{ url_for('static', filename='logo/favicon.png') }}" type="image/png">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="static/logo/favicon.png" type="image/png">
 </head>
 <body>
   <header>
     <div class="logo-container">
-      <img src="{{ url_for('static', filename='logo/logo-animato.gif') }}" alt="Logo animato" class="logo-animato">
+      <img src="static/logo/logo-animato.gif" alt="Logo animato" class="logo-animato">
     </div>
     <h1>La Stanza della Creatività di Manuela</h1>
     <p class="sottotitolo">Dove l'immaginazione prende forma</p>
@@ -42,15 +42,15 @@
       </div>
       <div class="grid">
         <div class="item pittura">
-          <img src="{{ url_for('static', filename='images/pittura1.jpg') }}" alt="Pittura Creativa">
+          <img src="static/images/pittura1.jpg" alt="Pittura Creativa">
           <p>Paesaggio ad acquerello</p>
         </div>
         <div class="item collage">
-          <img src="{{ url_for('static', filename='images/collage1.jpg') }}" alt="Collage Artistico">
+          <img src="static/images/collage1.jpg" alt="Collage Artistico">
           <p>Collage con materiali riciclati</p>
         </div>
         <div class="item legno">
-          <img src="{{ url_for('static', filename='images/legno1.jpg') }}" alt="Lavorazione del Legno">
+          <img src="static/images/legno1.jpg" alt="Lavorazione del Legno">
           <p>Progetto fai-da-te</p>
         </div>
       </div>
@@ -73,7 +73,7 @@
 
   <div id="chatbot">
     <div id="chat-header">
-      <img src="{{ url_for('static', filename='logo/artibot-avatar.png') }}" alt="Artibot" class="avatar">
+      <img src="static/logo/artibot-avatar.png" alt="Artibot" class="avatar">
       <span class="bot-name">Artibot – Assistente Creativo</span>
     </div>
     <div id="chat-window">
@@ -87,7 +87,7 @@
   <script>
     setTimeout(() => {
       const container = document.querySelector('.logo-container');
-      const logoUrl = "{{ url_for('static', filename='logo/logo2.png') }}";
+      const logoUrl = "static/logo/logo2.png";
       container.innerHTML = `<img src="${logoUrl}" alt="Logo La Stanza della Creatività di Manuela" class="logo">`;
     }, 3000);
 
@@ -110,6 +110,6 @@
     });
   </script>
 
-  <script src="{{ url_for('static', filename='script.js') }}"></script>
+  <script src="script.js"></script>
 </body>
 </html>
