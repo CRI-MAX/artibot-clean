@@ -1,7 +1,7 @@
 {
   "name": "manuela-creativita",
   "version": "1.0.0",
-  "description": "Sito portfolio creativo con chatbot AI",
+  "description": "Sito portfolio creativo con chatbot AI per La Stanza della Creatività di Manuela",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
@@ -11,16 +11,26 @@
     "express": "^4.18.2",
     "node-fetch": "^2.6.7"
   },
-  "devDependencies": {},
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/CRI-MAX/artibot-clean.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "portfolio",
+    "creatività",
+    "manuela",
+    "chatbot",
+    "artibot",
+    "express",
+    "nodejs"
+  ],
+  "author": "Massimo Cristofori",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/CRI-MAX/artibot-clean/issues"
   },
-  "homepage": "https://github.com/CRI-MAX/artibot-clean#readme"
+  "homepage": "https://www.stanzadellacreativita.org"
 }
