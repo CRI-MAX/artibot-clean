@@ -13,7 +13,7 @@ h1, h2 {
 
 p {
   line-height: 1.6;
-  padding: 0 15px;
+  padding-inline: 15px;
 }
 
 /* 🔝 Header */
@@ -63,7 +63,6 @@ nav {
 }
 
 .menu.active {
-  display: block;
   flex-direction: column;
   align-items: center;
 }
@@ -83,9 +82,14 @@ section {
   padding: 10px 15px;
   border: none;
   background-color: #d4a373;
-  color: white;
+  color: #fff;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filters button:hover {
+  background-color: #c07b4e;
 }
 
 .filters button.active {
@@ -98,20 +102,7 @@ section {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
-  padding: 0 15px;
-}
-
-.item {
-  background-color: #fff3e6;
-  padding: 10px;
-  border-radius: 8px;
-  text-align: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-
-.item img {
-  max-width: 100%;
-  border-radius: 5px;
+  padding-inline: 15px;
 }
 
 /* 📞 Contatti */
@@ -120,95 +111,256 @@ section {
   text-decoration: underline;
 }
 
-/* 🧠 Chatbot */
-#chatbot {
+/* 🔘 Pulsante mobile */
+#toggle-artibot {
   position: fixed;
   bottom: 20px;
-  right: 20px;
-  width: 280px;
-  background-color: #fff;
-  border: 1px solid #d4a373;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  font-size: 14px;
+  left: 20px;
+  background-color: #d4a373;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1001;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  display: none;
+}
+
+/* 🎨 Sidebar Artibot */
+#artibot-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 320px;
+  height: 100vh;
+  background-color: #fff8f0;
+  border-left: 2px solid #d4a373;
+  box-shadow: -4px 0 12px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
   z-index: 1000;
 }
 
-#chat-header {
-  display: flex;
-  align-items: center;
-  padding: 10px;
+.sidebar-header {
+  text-align: center;
+  padding: 20px 10px;
   background-color: #fbe3c6;
   border-bottom: 1px solid #d4a373;
 }
 
-.avatar {
-  width: 30px;
-  margin-right: 10px;
-}
-
-#chat-window {
-  padding: 10px;
-}
-
-#chat-log {
-  max-height: 150px;
-  overflow-y: auto;
+.sidebar-logo {
+  width: 50px;
   margin-bottom: 10px;
 }
 
-#user-input {
-  width: calc(100% - 60px);
-  padding: 5px;
+.sidebar-subtitle {
+  font-style: italic;
+  color: #7a4e2d;
+  margin: 5px 0 0;
 }
 
-#chat-window button {
-  padding: 5px 10px;
+.typing-animation {
+  font-size: 14px;
+  font-style: italic;
+  color: #7a4e2d;
+  padding: 10px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #d4a373;
+  width: 0;
+  animation: typing 3s steps(40, end) forwards, blink 0.7s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink
+/* 🌈 Base */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fff8f0;
+  color: #4a2c2a;
+}
+
+h1, h2 {
+  text-align: center;
+  color: #b86e3c;
+}
+
+p {
+  line-height: 1.6;
+  padding-inline: 15px;
+}
+
+/* 🔝 Header */
+header {
+  background-color: #fbe3c6;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+}
+
+.logo-animato,
+.logo {
+  max-width: 120px;
+  height: auto;
+}
+
+.sottotitolo {
+  font-style: italic;
+  color: #7a4e2d;
+}
+
+/* 🍔 Menu */
+nav {
+  margin-top: 15px;
+}
+
+.hamburger {
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: none;
+}
+
+.menu {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.menu li a {
+  text-decoration: none;
+  color: #4a2c2a;
+  font-weight: bold;
+}
+
+.menu.active {
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 📦 Sezioni */
+section {
+  padding: 40px 20px;
+}
+
+.gallery .filters {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.filters button {
+  margin: 5px;
+  padding: 10px 15px;
+  border: none;
+  background-color: #d4a373;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filters button:hover {
+  background-color: #c07b4e;
+}
+
+.filters button.active {
+  background-color: #b86e3c;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+/* 🖼️ Galleria */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  padding-inline: 15px;
+}
+
+/* 📞 Contatti */
+.contact a {
+  color: #b86e3c;
+  text-decoration: underline;
+}
+
+/* 🔘 Pulsante mobile */
+#toggle-artibot {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
   background-color: #d4a373;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
   cursor: pointer;
+  z-index: 1001;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  display: none;
 }
 
-.artibot-greeting {
-  padding: 10px;
-  font-style: italic;
+/* 🎨 Sidebar Artibot */
+#artibot-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 320px;
+  height: 100vh;
   background-color: #fff8f0;
-  border-top: 1px dashed #d4a373;
-  text-align: center;
+  border-left: 2px solid #d4a373;
+  box-shadow: -4px 0 12px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
 }
 
-/* 🦶 Footer */
-footer {
+.sidebar-header {
+  text-align: center;
+  padding: 20px 10px;
   background-color: #fbe3c6;
-  text-align: center;
-  padding: 20px;
+  border-bottom: 1px solid #d4a373;
+}
+
+.sidebar-logo {
+  width: 50px;
+  margin-bottom: 10px;
+}
+
+.sidebar-subtitle {
+  font-style: italic;
+  color: #7a4e2d;
+  margin: 5px 0 0;
+}
+
+.typing-animation {
   font-size: 14px;
+  font-style: italic;
+  color: #7a4e2d;
+  padding: 10px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #d4a373;
+  width: 0;
+  animation: typing 3s steps(40, end) forwards, blink 0.7s step-end infinite;
 }
 
-/* 📱 Responsive */
-@media (max-width: 768px) {
-  .menu {
-    display: none;
-    flex-direction: column;
-    gap: 10px;
-    background-color: #fbe3c6;
-    padding: 10px;
-    border-radius: 8px;
-  }
-
-  .hamburger {
-    display: block;
-    margin: 0 auto;
-  }
-
-  .grid {
-    grid-template-columns: 1fr;
-  }
-
-  #chatbot {
-    width: 90%;
-    right: 5%;
-  }
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
 }
+
+@keyframes blink

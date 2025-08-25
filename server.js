@@ -8,34 +8,35 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const API_KEY = process.env.OPENROUTER_API_KEY;
 
-// Middleware
+// 🔧 Middleware
 app.use(express.json());
 
-// Serve cartelle statiche
+// 📁 Static files
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/static', express.static(path.join(__dirname, 'static')));
 
-// Funzione per loggare le conversazioni
+// 📝 Log conversazioni
 function logConversation(userMsg, botReply, req) {
   const timestamp = new Date().toISOString();
   const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
   const agent = req.headers['user-agent'];
   const entry = `[${timestamp}]\nIP: ${ip}\nUser-Agent: ${agent}\nUtente: ${userMsg}\nArtibot: ${botReply}\n\n`;
+
   fs.appendFile(path.join(__dirname, 'chatlog.txt'), entry, err => {
     if (err) console.error('Errore nel salvataggio log:', err);
   });
 }
 
-// Endpoint di test
+// 🔍 Endpoint di test
 app.get('/ping', (req, res) => {
   res.send('🏓 Pong! Il server è attivo.');
 });
 
-// Endpoint chatbot
+// 🤖 Endpoint chatbot
 app.post('/chat', async (req, res) => {
-  const userMessage = req.body.message;
+  const userMessage = req.body.message?.trim();
 
-  if (!userMessage || typeof userMessage !== 'string' || userMessage.trim() === '') {
+  if (!userMessage) {
     return res.status(400).json({ reply: '❌ Messaggio non valido o vuoto.' });
   }
 
@@ -67,19 +68,18 @@ app.post('/chat', async (req, res) => {
     }
 
     const data = await response.json();
-    console.log('📨 Risposta OpenRouter:', JSON.stringify(data, null, 2));
-
     const reply = data.choices?.[0]?.message?.content || '⚠️ Risposta non disponibile.';
+
     logConversation(userMessage, reply, req);
     res.json({ reply });
 
   } catch (error) {
-    console.error('🔥 Errore OpenRouter:', error.response?.data || error.message || error);
+    console.error('🔥 Errore OpenRouter:', error.message || error);
     res.status(500).json({ reply: '😓 Ops! Errore interno. Riprova tra poco.' });
   }
 });
 
-// Avvio server
+// 🚀 Avvio server
 app.listen(PORT, () => {
-  console.log(`🚀 Server listening on port ${PORT}`);
+  console.log(`✅ Server attivo su http://localhost:${PORT}`);
 });

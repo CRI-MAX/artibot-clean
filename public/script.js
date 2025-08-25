@@ -4,7 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const menu = document.querySelector('.menu');
   if (hamburger && menu) {
     hamburger.addEventListener('click', () => {
-      menu.classList.toggle('active');
+      const isActive = menu.classList.toggle('active');
+      menu.hidden = !isActive;
+      hamburger.setAttribute('aria-expanded', isActive);
     });
   }
 
@@ -12,109 +14,91 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.filters button').forEach(button => {
     button.addEventListener('click', () => {
       const category = button.dataset.filter;
+      document.querySelectorAll('.filters button').forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
       filterProjects(category);
       mostraSuggerimento(category);
     });
   });
 
   // 🖼️ CARICAMENTO GALLERIA DINAMICA
-  fetch('static/data/portfolio.json')
-    .then(response => {
-      if (!response.ok) throw new Error('Errore nel caricamento dei dati');
-      return response.json();
-    })
-    .then(data => {
-      const grid = document.querySelector('.grid');
-      if (!grid) return;
-
-      grid.innerHTML = '';
-
-      data.forEach(item => {
-        if (!item.image || !item.title || !item.description || !item.category) return;
-
-        const div = document.createElement('div');
-        div.className = `card ${item.category}`;
-        div.dataset.category = item.category;
-        div.innerHTML = `
-          <img src="${item.image}" alt="${item.title}" onerror="this.src='static/images/fallback.jpg'">
-          <h3>${item.title}</h3>
-          <p>${item.description}</p>
-        `;
-        grid.appendChild(div);
-      });
-
-      // Attiva filtro "all" e suggerimento iniziale
-      filterProjects('all');
-      mostraSuggerimento('all');
-    })
-    .catch(error => {
-      console.error('Errore:', error);
-      const grid = document.querySelector('.grid');
-      if (grid) {
-        grid.innerHTML = '<p>Impossibile caricare i progetti al momento.</p>';
-      }
-    });
+  caricaGalleria();
 
   // ⌨️ Invio con tasto Invio
   const input = document.getElementById('user-input');
   if (input) {
-    input.addEventListener('keydown', (e) => {
+    input.addEventListener('keydown', e => {
       if (e.key === 'Enter') sendMessage();
     });
   }
 
-  // 📝 FORM NUOVA CREAZIONE
-  const form = document.getElementById('aggiungi-creazione');
-  if (form) {
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const nuovo = {
-        title: form.title.value.trim(),
-        description: form.description.value.trim(),
-        category: form.category.value,
-        image: form.image.value.trim()
-      };
+  // 📱 Toggle sidebar su mobile
+  document.getElementById('toggle-artibot')?.addEventListener('click', () => {
+    const sidebar = document.getElementById('artibot-sidebar');
+    sidebar?.classList.toggle('active');
+  });
 
-      const grid = document.querySelector('.grid');
-      if (!grid) return;
-
-      const div = document.createElement('div');
-      div.className = `card ${nuovo.category}`;
-      div.dataset.category = nuovo.category;
-      div.innerHTML = `
-        <img src="${nuovo.image}" alt="${nuovo.title}" onerror="this.src='static/images/fallback.jpg'">
-        <h3>${nuovo.title}</h3>
-        <p>${nuovo.description}</p>
-      `;
-      grid.appendChild(div);
-
-      form.reset();
-      filterProjects(nuovo.category);
-      mostraSuggerimento(nuovo.category);
-    });
+  // 🎤 Saluto vocale al caricamento
+  const frase = "Ciao! Sono Artibot, il tuo assistente creativo.";
+  if ('speechSynthesis' in window) {
+    const utterance = new SpeechSynthesisUtterance(frase);
+    utterance.lang = 'it-IT';
+    speechSynthesis.speak(utterance);
   }
 });
 
 // 🎯 FILTRI
 function filterProjects(category) {
-  const cards = document.querySelectorAll('.card');
-  cards.forEach(card => {
+  document.querySelectorAll('.card').forEach(card => {
     card.style.display = (category === 'all' || card.dataset.category === category) ? 'block' : 'none';
   });
-  mostraSuggerimento(category);
 }
 
 // 💡 SUGGERIMENTI CREATIVI
 const ideeArtibot = {
-  design: "🎨 Progetta un poster ispirato ai colori dell'autunno.",
-  fotografia: "📸 Scatta un ritratto con luce naturale e sfondo urbano.",
-  illustrazione: "🖌️ Disegna un animale immaginario nato da due specie reali.",
+  pittura: "🎨 Prova a dipingere un paesaggio con colori tenui e rilassanti.",
+  collage: "✂️ Crea un collage con materiali riciclati e forme geometriche.",
+  legno: "🪵 Costruisci una cornice decorata con incisioni personalizzate.",
   all: "✨ Scegli una categoria per ricevere un'idea creativa!"
 };
 
 function mostraSuggerimento(categoria) {
   const box = document.getElementById('artibot-suggestion');
   if (box) box.textContent = ideeArtibot[categoria] || "Nessuna idea disponibile.";
+}
+
+// 🖼️ GALLERIA DINAMICA
+async function caricaGalleria() {
+  try {
+    const res = await fetch('static/data/portfolio.json');
+    if (!res.ok) throw new Error('Errore nel caricamento dei dati');
+    const data = await res.json();
+    const grid = document.querySelector('.grid');
+    if (!grid) return;
+
+    grid.innerHTML = '';
+    data.forEach(item => {
+      if (!item.image || !item.title || !item.description || !item.category) return;
+      const div = document.createElement('div');
+      div.className = `card ${item.category}`;
+      div.dataset.category = item.category;
+      div.innerHTML = `
+        <img src="${item.image}" alt="${item.title}" onerror="this.src='static/images/fallback.jpg'">
+        <h3>${item.title}</h3>
+        <p>${item.description}</p>
+      `;
+      grid.appendChild(div);
+    });
+
+    filterProjects('all');
+    mostraSuggerimento('all');
+  } catch (error) {
+    console.error('Errore:', error);
+    const grid = document.querySelector('.grid');
+    if (grid) {
+      grid.innerHTML = '<p>Impossibile caricare i progetti al momento.</p>';
+    }
+  }
 }
 
 // 🤖 CHATBOT ARTIBOT
@@ -126,7 +110,6 @@ function sendMessage() {
 
   input.disabled = true;
 
-  // Messaggio utente
   const userMsg = document.createElement('div');
   userMsg.className = 'chat-message user';
   userMsg.innerHTML = `<strong>Tu:</strong> ${userText}`;
@@ -134,14 +117,12 @@ function sendMessage() {
 
   input.value = '';
 
-  // Messaggio di caricamento
   const botMsg = document.createElement('div');
   botMsg.className = 'chat-message bot';
   botMsg.innerHTML = `<strong>Artibot:</strong> <em><span class="loader">💬</span> Sto pensando...</em>`;
   log.appendChild(botMsg);
   log.scrollTop = log.scrollHeight;
 
-  // Timeout di sicurezza
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 10000);
 

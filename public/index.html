@@ -16,8 +16,8 @@
     <h1>La Stanza della Creatività di Manuela</h1>
     <p class="sottotitolo">Dove l'immaginazione prende forma</p>
     <nav>
-      <button class="hamburger" aria-label="Apri menu">&#9776;</button>
-      <ul class="menu">
+      <button class="hamburger" aria-label="Apri menu" aria-expanded="false">&#9776;</button>
+      <ul class="menu" hidden>
         <li><a href="#intro">Home</a></li>
         <li><a href="#gallery">Creazioni</a></li>
         <li><a href="#about">Chi siamo</a></li>
@@ -41,20 +41,7 @@
         <button data-filter="collage">Collage</button>
         <button data-filter="legno">Legno</button>
       </div>
-      <div class="grid">
-        <div class="item pittura">
-          <img src="static/images/pittura1.jpg" alt="Pittura Creativa" />
-          <p>Paesaggio ad acquerello</p>
-        </div>
-        <div class="item collage">
-          <img src="static/images/collage1.jpg" alt="Collage Artistico" />
-          <p>Collage con materiali riciclati</p>
-        </div>
-        <div class="item legno">
-          <img src="static/images/legno1.jpg" alt="Lavorazione del Legno" />
-          <p>Progetto fai-da-te</p>
-        </div>
-      </div>
+      <div class="grid"></div>
     </section>
 
     <section id="about" class="about">
@@ -72,49 +59,26 @@
     <p>&copy; 2025 La Stanza della Creatività di Manuela. Tutti i diritti riservati.</p>
   </footer>
 
-  <div id="chatbot">
-    <div id="chat-header">
-      <img src="static/logo/artibot-avatar.png" alt="Artibot" class="avatar" />
-      <span class="bot-name">Artibot – Assistente Creativo</span>
+  <!-- 🔘 Pulsante mobile per aprire Artibot -->
+  <button id="toggle-artibot" aria-label="Apri Artibot">🤖</button>
+
+  <!-- 🎨 Sidebar Artibot -->
+  <aside id="artibot-sidebar">
+    <div class="sidebar-header">
+      <img src="static/logo/artibot-avatar.png" alt="Logo Artibot" class="sidebar-logo" />
+      <h3>Artibot</h3>
+      <p class="sidebar-subtitle">Assistente creativo sempre con te 🎨</p>
+      <div id="artibot-welcome" class="typing-animation">
+        <span>🎨 Ciao! Sono Artibot, il tuo assistente creativo.</span>
+      </div>
     </div>
-    <div id="chat-window">
-      <div id="chat-log"></div>
-      <input type="text" id="user-input" placeholder="Scrivi qui..." />
+    <div id="artibot-suggestion" class="sidebar-suggestion">✨ Scegli una categoria per ricevere un'idea creativa!</div>
+    <div id="chat-log" class="sidebar-chatlog" role="log" aria-live="polite"></div>
+    <div class="sidebar-input">
+      <input type="text" id="user-input" placeholder="Scrivi qui..." aria-label="Messaggio utente" />
       <button onclick="sendMessage()">Invia</button>
     </div>
-    <p class="artibot-greeting">🎨🔧 Ciao! Ho un sacco di idee geniali... alcune anche funzionano! 😄</p>
-  </div>
-
-  <script>
-    // Logo animato che cambia dopo 3 secondi
-    setTimeout(() => {
-      const container = document.querySelector('.logo-container');
-      const logoUrl = "static/logo/logo2.png";
-      container.innerHTML = `<img src="${logoUrl}" alt="Logo La Stanza della Creatività di Manuela" class="logo" />`;
-    }, 3000);
-
-    // Menu hamburger
-    const hamburger = document.querySelector('.hamburger');
-    const menu = document.querySelector('.menu');
-    hamburger.addEventListener('click', () => {
-      menu.classList.toggle('active');
-    });
-
-    // Filtri galleria
-    const filterButtons = document.querySelectorAll('.filters button');
-    const items = document.querySelectorAll('.grid .item');
-
-    filterButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-        const filter = button.getAttribute('data-filter');
-        items.forEach(item => {
-          item.style.display = (filter === 'all' || item.classList.contains(filter)) ? 'block' : 'none';
-        });
-      });
-    });
-  </script>
+  </aside>
 
   <script src="script.js"></script>
 </body>
