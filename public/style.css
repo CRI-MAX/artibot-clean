@@ -1,90 +1,79 @@
-/* 🌟 Reset base */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+/* 🌈 Base */
 body {
+  margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background-color: #fffaf4;
-  color: #333;
-  line-height: 1.6;
+  background-color: #fff8f0;
+  color: #4a2c2a;
 }
 
-/* 🎨 Header */
-header {
+h1, h2 {
   text-align: center;
-  padding: 30px 20px;
-  background-color: #f8e8dc;
+  color: #b86e3c;
 }
 
-.logo-animato, .logo {
-  width: 120px;
+p {
+  line-height: 1.6;
+  padding: 0 15px;
+}
+
+/* 🔝 Header */
+header {
+  background-color: #fbe3c6;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+}
+
+.logo-animato,
+.logo {
+  max-width: 120px;
   height: auto;
-  margin-bottom: 10px;
-}
-
-h1 {
-  font-size: 2.2em;
-  margin-bottom: 5px;
 }
 
 .sottotitolo {
   font-style: italic;
-  color: #555;
-  margin-bottom: 15px;
+  color: #7a4e2d;
 }
 
-/* 🧭 Navigation */
+/* 🍔 Menu */
 nav {
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .hamburger {
-  font-size: 26px;
+  font-size: 24px;
   background: none;
   border: none;
   cursor: pointer;
-  color: #333;
+  display: none;
 }
 
 .menu {
   list-style: none;
-  display: none;
   padding: 0;
-  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.menu li a {
+  text-decoration: none;
+  color: #4a2c2a;
+  font-weight: bold;
 }
 
 .menu.active {
   display: block;
+  flex-direction: column;
+  align-items: center;
 }
 
-.menu li {
-  margin: 10px 0;
-}
-
-.menu a {
-  text-decoration: none;
-  color: #333;
-  font-weight: bold;
-}
-
-/* 📦 Sections */
+/* 📦 Sezioni */
 section {
   padding: 40px 20px;
 }
 
-.intro, .about, .contact {
-  text-align: center;
-}
-
-/* 🖼️ Gallery */
-.gallery {
-  background-color: #f0f0f0;
-}
-
-.filters {
+.gallery .filters {
   text-align: center;
   margin-bottom: 20px;
 }
@@ -95,87 +84,67 @@ section {
   border: none;
   background-color: #d4a373;
   color: white;
-  cursor: pointer;
   border-radius: 5px;
-  transition: background-color 0.3s ease;
+  cursor: pointer;
 }
 
-.filters button:hover {
+.filters button.active {
   background-color: #b86e3c;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
 }
 
+/* 🖼️ Galleria */
 .grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
+  padding: 0 15px;
 }
 
-.item, .card {
-  width: 250px;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  overflow: hidden;
-  text-align: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease;
-}
-
-.item:hover, .card:hover {
-  transform: scale(1.03);
-}
-
-.item img, .card img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.item p, .card p {
+.item {
+  background-color: #fff3e6;
   padding: 10px;
-  font-size: 0.95em;
-}
-
-/* 🧾 Footer */
-footer {
+  border-radius: 8px;
   text-align: center;
-  padding: 20px;
-  background-color: #f8e8dc;
-  font-size: 0.9em;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-/* 🤖 Chatbot */
+.item img {
+  max-width: 100%;
+  border-radius: 5px;
+}
+
+/* 📞 Contatti */
+.contact a {
+  color: #b86e3c;
+  text-decoration: underline;
+}
+
+/* 🧠 Chatbot */
 #chatbot {
   position: fixed;
-  bottom: 0;
-  right: 0;
-  width: 300px;
+  bottom: 20px;
+  right: 20px;
+  width: 280px;
   background-color: #fff;
-  border: 2px solid #d4a373;
-  border-radius: 10px 10px 0 0;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-  font-size: 0.9em;
-  z-index: 999;
+  border: 1px solid #d4a373;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-size: 14px;
+  z-index: 1000;
 }
 
 #chat-header {
   display: flex;
   align-items: center;
   padding: 10px;
-  background-color: #d4a373;
-  color: white;
-  border-radius: 10px 10px 0 0;
+  background-color: #fbe3c6;
+  border-bottom: 1px solid #d4a373;
 }
 
 .avatar {
   width: 30px;
-  height: 30px;
   margin-right: 10px;
-}
-
-.bot-name {
-  font-weight: bold;
 }
 
 #chat-window {
@@ -188,39 +157,9 @@ footer {
   margin-bottom: 10px;
 }
 
-.chat-message {
-  margin-bottom: 8px;
-}
-
-.chat-message.user {
-  text-align: right;
-  color: #333;
-}
-
-.chat-message.bot {
-  text-align: left;
-  color: #444;
-}
-
-.loader {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  border: 2px solid #d4a373;
-  border-top: 2px solid transparent;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
 #user-input {
-  width: 70%;
+  width: calc(100% - 60px);
   padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
 }
 
 #chat-window button {
@@ -235,24 +174,41 @@ footer {
 .artibot-greeting {
   padding: 10px;
   font-style: italic;
+  background-color: #fff8f0;
+  border-top: 1px dashed #d4a373;
   text-align: center;
-  color: #666;
+}
+
+/* 🦶 Footer */
+footer {
+  background-color: #fbe3c6;
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
 }
 
 /* 📱 Responsive */
 @media (max-width: 768px) {
-  .grid {
+  .menu {
+    display: none;
     flex-direction: column;
-    align-items: center;
+    gap: 10px;
+    background-color: #fbe3c6;
+    padding: 10px;
+    border-radius: 8px;
   }
 
-  .item, .card {
-    width: 90%;
+  .hamburger {
+    display: block;
+    margin: 0 auto;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
   }
 
   #chatbot {
-    width: 100%;
-    right: 0;
-    border-radius: 0;
+    width: 90%;
+    right: 5%;
   }
 }

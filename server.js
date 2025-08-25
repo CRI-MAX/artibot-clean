@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const fetch = require('node-fetch');
 const path = require('path');
+const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -11,10 +12,19 @@ const API_KEY = process.env.OPENROUTER_API_KEY;
 app.use(express.json());
 
 // Serve cartelle statiche
-app.use(express.static(path.join(__dirname, 'public'))); // HTML, CSS, JS
-app.use('/static', express.static(path.join(__dirname, 'static'))); // Immagini, loghi, ecc.
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/static', express.static(path.join(__dirname, 'static')));
 
-// Endpoint per il chatbot
+// Funzione per loggare le conversazioni
+function logConversation(userMsg, botReply) {
+  const timestamp = new Date().toISOString();
+  const entry = `[${timestamp}]\nUtente: ${userMsg}\nArtibot: ${botReply}\n\n`;
+  fs.appendFile(path.join(__dirname, 'chatlog.txt'), entry, err => {
+    if (err) console.error('Errore nel salvataggio log:', err);
+  });
+}
+
+// Endpoint chatbot
 app.post('/chat', async (req, res) => {
   const userMessage = req.body.message;
   if (!userMessage) {
@@ -41,10 +51,11 @@ app.post('/chat', async (req, res) => {
     console.log('📨 Risposta OpenRouter:', JSON.stringify(data, null, 2));
 
     const reply = data.choices?.[0]?.message?.content || '⚠️ Risposta non disponibile.';
+    logConversation(userMessage, reply);
     res.json({ reply });
   } catch (error) {
     console.error('🔥 Errore OpenRouter:', error);
-    res.status(500).json({ reply: '⚠️ Errore interno del server.' });
+    res.status(500).json({ reply: '😓 Ops! Errore interno. Riprova tra poco.' });
   }
 });
 
