@@ -75,6 +75,6 @@ app.post('/chat', async (req, res) => {
 });
 
 // Avvio server
-app.listen(PORT, () => {
-  console.log(`✅ Server avviato su http://localhost:${PORT}`);
+app.listen(3000, () => {
+  console.log("Server listening on port 3000");
 });
