@@ -16,19 +16,27 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/static', express.static(path.join(__dirname, 'static')));
 
 // Funzione per loggare le conversazioni
-function logConversation(userMsg, botReply) {
+function logConversation(userMsg, botReply, req) {
   const timestamp = new Date().toISOString();
-  const entry = `[${timestamp}]\nUtente: ${userMsg}\nArtibot: ${botReply}\n\n`;
+  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+  const agent = req.headers['user-agent'];
+  const entry = `[${timestamp}]\nIP: ${ip}\nUser-Agent: ${agent}\nUtente: ${userMsg}\nArtibot: ${botReply}\n\n`;
   fs.appendFile(path.join(__dirname, 'chatlog.txt'), entry, err => {
     if (err) console.error('Errore nel salvataggio log:', err);
   });
 }
 
+// Endpoint di test
+app.get('/ping', (req, res) => {
+  res.send('🏓 Pong! Il server è attivo.');
+});
+
 // Endpoint chatbot
 app.post('/chat', async (req, res) => {
   const userMessage = req.body.message;
-  if (!userMessage) {
-    return res.status(400).json({ reply: '❌ Messaggio mancante.' });
+
+  if (!userMessage || typeof userMessage !== 'string' || userMessage.trim() === '') {
+    return res.status(400).json({ reply: '❌ Messaggio non valido o vuoto.' });
   }
 
   try {
@@ -47,12 +55,19 @@ app.post('/chat', async (req, res) => {
       })
     });
 
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error(`❌ Errore API (${response.status}):`, errorText);
+      return res.status(response.status).json({ reply: `🚫 Errore ${response.status}: richiesta non riuscita.` });
+    }
+
     const data = await response.json();
     console.log('📨 Risposta OpenRouter:', JSON.stringify(data, null, 2));
 
     const reply = data.choices?.[0]?.message?.content || '⚠️ Risposta non disponibile.';
-    logConversation(userMessage, reply);
+    logConversation(userMessage, reply, req);
     res.json({ reply });
+
   } catch (error) {
     console.error('🔥 Errore OpenRouter:', error);
     res.status(500).json({ reply: '😓 Ops! Errore interno. Riprova tra poco.' });
