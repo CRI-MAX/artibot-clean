@@ -82,7 +82,8 @@
   <script>
     setTimeout(() => {
       const container = document.querySelector('.logo-container');
-      container.innerHTML = '<img src="{{ url_for(\'static\', filename=\'logo/logo2.png\') }}" alt="Logo La Stanza della Creatività di Manuela" class="logo">';
+      const logoUrl = "{{ url_for('static', filename='logo/logo2.png') }}";
+      container.innerHTML = `<img src="${logoUrl}" alt="Logo La Stanza della Creatività di Manuela" class="logo">`;
     }, 3000);
   </script>
 

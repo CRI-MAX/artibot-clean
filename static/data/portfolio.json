@@ -1,0 +1,44 @@
+[
+  {
+    "title": "Sito Web Portfolio",
+    "description": "Un sito responsive per mostrare i miei lavori.",
+    "image": "images/portfolio1.jpg",
+    "category": "web"
+  },
+  {
+    "title": "Logo Design",
+    "description": "Creazione di un logo moderno per un brand.",
+    "image": "images/logo1.jpg",
+    "category": "design"
+  },
+  {
+    "title": "Landing Page",
+    "description": "Pagina promozionale per un prodotto tech.",
+    "image": "images/landing.jpg",
+    "category": "web"
+  },
+  {
+    "title": "Pittura Creativa",
+    "description": "Paesaggio ad acquerello per principianti, con colori tenui e atmosfera rilassante.",
+    "image": "images/tutorial-pittura.jpg",
+    "category": "manuale"
+  },
+  {
+    "title": "Cucito e Sartoria",
+    "description": "Patchwork creativo e sartoria artigianale, con tessuti colorati e dettagli cuciti a mano.",
+    "image": "images/tutorial-cucito.jpg",
+    "category": "manuale"
+  },
+  {
+    "title": "Lavorazione del Legno",
+    "description": "Progetto fai-da-te con strumenti da falegname e trucioli sul banco da lavoro.",
+    "image": "images/tutorial-legno.jpg",
+    "category": "manuale"
+  },
+  {
+    "title": "Idee con Materiali di Recupero",
+    "description": "Creazioni originali con oggetti riciclati: barattoli, cartoni e materiali sostenibili.",
+    "image": "images/tutorial-idee.jpg",
+    "category": "manuale"
+  }
+]
