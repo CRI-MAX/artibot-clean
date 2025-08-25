@@ -10,5 +10,17 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "node-fetch": "^2.6.7"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CRI-MAX/artibot-clean.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CRI-MAX/artibot-clean/issues"
+  },
+  "homepage": "https://github.com/CRI-MAX/artibot-clean#readme"
 }
