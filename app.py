@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import openai
 import os
@@ -6,13 +6,19 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-# Imposta la chiave API da variabile d'ambiente
+# 🔐 Imposta la chiave API da variabile d'ambiente
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-@app.route('/chat', methods=['POST'])
+# 🏠 Homepage
+@app.route("/")
+def home():
+    return render_template("index.html")
+
+# 🤖 Endpoint chatbot
+@app.route("/chat", methods=["POST"])
 def chat():
     data = request.get_json()
-    message = data.get('message', '').strip() if data else ''
+    message = data.get("message", "").strip() if data else ""
 
     if not message:
         return jsonify({"reply": "Non ho ricevuto nulla. Vuoi riprovare?"}), 400
@@ -41,5 +47,5 @@ def chat():
         return jsonify({"reply": "Ops! Qualcosa è andato storto. Riprova tra poco."}), 500
 
 # ⚠️ Solo per test locali. Render usa Gunicorn.
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
